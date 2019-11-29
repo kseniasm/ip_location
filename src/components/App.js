@@ -4,55 +4,44 @@ import axios from "axios";
 
 import NavBar from "./navBar/NavBar";
 import Search from "./Search";
-import Map from "./Map";
+
 import SearchResults from "./SearchResults";
 
 class App extends Component {
   state = {
-    latitude: "",
-    longitude: "",
-    city: "",
-    country: "",
+    location: "",
     showResults: false,
     loading: false,
     error: false
   };
 
   findLocation = async () => {
-    this.showResults(false);
+    this.setState({ showResults: false, loading: true, error: false });
     try {
       let response = await axios.get(
         `https://api.ipdata.co?api-key=${process.env.REACT_APP_IPDATA_KEY}`
       );
 
-      let data = await response.json();
+      let data = response.data;
 
       this.setState({
-        latitude: data.latitude,
-        longitude: data.longitude,
-        city: data.city,
-        country: data.country_name
+        location: {
+          latitude: data.latitude,
+          longitude: data.longitude,
+          city: data.city,
+          country: data.country_name
+        },
+        showResults: true,
+        loading: false
       });
     } catch (error) {
       console.log(error.response);
-      this.setState({ loading: false, error: true });
+      this.setState({ showResults: false, loading: false, error: true });
     }
   };
 
-  showResults = value => {
-    this.setState({ showResults: value, loading: !value, error: false });
-  };
-
   render() {
-    const {
-      error,
-      showResults,
-      loading,
-      city,
-      country,
-      latitude,
-      longitude
-    } = this.state;
+    const { error, showResults, loading, location } = this.state;
 
     return (
       <Container textAlign="center" style={{ marginTop: "6em" }}>
@@ -60,18 +49,11 @@ class App extends Component {
           <NavBar />
           {error && (
             <Header color="red" size="large">
-              {" "}
               OOPS! SOMETHING WENT WRONG
             </Header>
           )}
           <Search handleOnClick={this.findLocation} loading={loading} />
-          {showResults && <SearchResults city={city} country={country} />}
-
-          <Map
-            latitude={latitude}
-            longitude={longitude}
-            handleOnLoad={this.showResults}
-          />
+          {showResults && <SearchResults location={location} />}
         </Segment>
       </Container>
     );

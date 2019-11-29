@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "semantic-ui-react";
+import Map from "./Map";
 
-const SearchResults = ({ city, country }) => {
-  if (!city && !country) return <div></div>;
+const SearchResults = ({ location }) => {
+  const [ready, setReady] = useState(false);
 
-  return <Header>{`LOCATION: ${city}, ${country}`}</Header>;
+  if (!location) return <div></div>;
+
+  return (
+    <div style={{ marginTop: "2em" }}>
+      {ready && (
+        <Header>{`LOCATION: ${location.city}, ${location.country}`}</Header>
+      )}
+      <Map location={location} handleOnLoad={setReady} />
+    </div>
+  );
 };
 
 export default SearchResults;
