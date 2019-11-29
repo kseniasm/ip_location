@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Container, Segment, Header } from "semantic-ui-react";
 import axios from "axios";
-
+import { IPDATA_KEY } from "../config/config";
 import NavBar from "./navBar/NavBar";
 import Search from "./Search";
-
 import SearchResults from "./SearchResults";
 
 class App extends Component {
@@ -19,7 +18,8 @@ class App extends Component {
     this.setState({ showResults: false, loading: true, error: false });
     try {
       let response = await axios.get(
-        `https://api.ipdata.co?api-key=${process.env.REACT_APP_IPDATA_KEY}`
+        // `https://api.ipdata.co?api-key=${process.env.REACT_APP_IPDATA_KEY}`  // hiding of the api key
+        `https://api.ipdata.co?api-key=${IPDATA_KEY}` //for test
       );
 
       let data = response.data;
@@ -47,12 +47,15 @@ class App extends Component {
       <Container textAlign="center" style={{ marginTop: "6em" }}>
         <Segment>
           <NavBar />
+
           {error && (
             <Header color="red" size="large">
               OOPS! SOMETHING WENT WRONG
             </Header>
           )}
+
           <Search handleOnClick={this.findLocation} loading={loading} />
+
           {showResults && <SearchResults location={location} />}
         </Segment>
       </Container>

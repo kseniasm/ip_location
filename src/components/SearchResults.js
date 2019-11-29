@@ -5,8 +5,7 @@ import Map from "./Map";
 const SearchResults = ({ location }) => {
   const [ready, setReady] = useState(false);
 
-  if (!location) return <div></div>;
-
+  
   return (
     <div style={{ marginTop: "2em" }}>
       {ready && (
