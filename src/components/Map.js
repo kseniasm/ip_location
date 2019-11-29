@@ -1,5 +1,5 @@
 import React from "react";
-import {GOOGLE_API_KEY} from '../config';
+import {GOOGLE_API_KEY} from '../config/config';
 
 const Map = ({ location, handleOnLoad }) => {
   return (

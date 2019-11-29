@@ -7,7 +7,7 @@ const NavBar = () => {
     <Menu inverted fixed="top" size="massive">
       <Container>
         <Menu.Item header>
-          <img src="%PUBLIC_URL%/assets/icon.png" alt="logo" />
+          <img src="assets/icon.png" alt="logo" />
           IP LOCATION
         </Menu.Item>
       </Container>
