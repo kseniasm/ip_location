@@ -1,3 +1,5 @@
+You can preview the website [here](https://kseniasm.github.io/ip_location)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
